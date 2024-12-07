@@ -75,10 +75,15 @@ There are two methods to get Postgres running locally.
         docker compose up -d
         ```
         
-- A folder named **`postgres-data`** will be created in the root of the repo. The data backing your Postgres instance will be saved here.
+- For non-windows users, a folder named **`postgres-data`** will be created in the root of the repo. The data backing your Postgres instance will be saved here.
 - You can check that your Docker Compose stack is running by either:
     - Going into Docker Desktop: you should see an entry there with a drop-down for each of the containers running in your Docker Compose stack.
     - Running **`docker ps -a`** and looking for the containers with the name **`postgres`**.
+- For windows users, for the data to be loaded within postgres, follow these additional steps : 
+  1. Find the container id by running `docker ps` - under CONTAINER ID
+  2. Go inside the container by executing `docker exec -it <container_name_or_id> bash`
+  3. Run `pg_restore -U $POSTGRES_USER -d $POSTGRES_DB /docker-entrypoint-initdb.d/data.dump` 
+
 - If you navigate to **`http://localhost:5050`** you will be able to see the PGAdmin instance up and running and should be able to connect to the following server:
     ![Image showing the setup for PGAdmin](.attachments/pgadmin-server.png)
 Where:
